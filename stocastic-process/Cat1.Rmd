@@ -1,0 +1,31 @@
+---
+title: "Cat 1"
+output: html_notebook
+---
+#Q1
+
+
+
+
+# Q3
+
+Tom starts with $5, and p = 0.63: What is the probability that Tom obtains a fortune
+of N = 12 without going broke?
+
+$$i=5,N=12 \text{ and } q=1-p=0.37$$
+hence
+$$\frac{q}{p}=\frac{37}{63}$$
+$$P_2 = \frac{1-(37/63)^5}{1-(37/63)^{12}} = \frac{0.93012}{0.99832} = 0.9317$$
+What is the probability that Tom will become infinitely rich?
+
+$$1-(q/p)^i = 1-(37/63)^5 = 0.93012 $$
+
+If Tom instead started with i = $2, what is the probability that he
+would go broke?
+
+$$ \text{The probability he becomes rich is } 1-(q/p)^i  = 1-(37/63)^2= 0.6550$$
+# Q4
+
+the probability that the stock goes up by 15 before going down by 6.computing $p(a)$
+$$p=0.6,q=1-p=0.4,a=15,b=6$$
+$$p(a)=\frac{1-(\frac{q}{p})^b}{1-(\frac{q}{p})^{a+b}} = \frac{1-(\frac{0.4}{0.6})^6}{1-(\frac{0.4}{0.6})^{15+6}} = \frac{0.9122}{0.9998} =0.9914 $$
