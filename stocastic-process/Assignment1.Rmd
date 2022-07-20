@@ -1,0 +1,69 @@
+---
+title: "Assignment 1"
+author: "79546 - Stephen K. Ng'etich"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+---
+
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(fig.width=6, fig.height=6) 
+
+```
+
+
+# Pre-requisite
+## Load packages
+```{r message = FALSE,warning = FALSE}
+# Clear variables
+rm(list=ls())
+library(markovchain)
+library(diagram)
+```
+
+
+# Q1  
+
+## Generate the transition probabilities
+the Markov chain state space $S ={H,D,Y}$ where H represents Harvard, D for Dartmouth and y for Yale
+```{r}
+states = c("H", "D", "Y")
+trans_mat1 <- matrix(c(.6, 0, .4,
+              .3, .5, .2,
+              .35, .35, .3), nrow = 3, byrow = TRUE)
+
+rownames(trans_mat1) = states
+colnames(trans_mat1) = states
+print(trans_mat1)
+
+```
+## Draw the transition states with their respective probabilities
+
+```{r}
+mk_chain1 = new("markovchain",
+                 states=states,
+                 transitionMatrix=trans_mat1,
+                 name="HDY",
+                )
+
+plotmat(trans_mat1,relsize = 0.75)
+```
+
+# Q4  
+## Stock market price data  
+Yes, Stock Market price is highly volatile 
+
+## Appraisal of a Secondary school mathematics teacher      
+No  
+
+## Collaborative filtering on a database of movie reviews: for example, Netflix challenge: predict about how much someone is going to enjoy a movie based on their and other users’ movie preferences  
+No, User rarely change their movie preferences  
+
+## Daily weather forecast in Nairobi  
+Yes, the daily weather
+## Optical character recognition 
+Yes, combination of characters have different generate different meanings.
+## Cost of gemstones in Bangladesh  
