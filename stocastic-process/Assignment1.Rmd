@@ -1,5 +1,5 @@
 ---
-title: "Assignment 1"
+title: 'Assignment 1'
 author: "79546 - Stephen K. Ng'etich"
 output:
   pdf_document:
@@ -8,26 +8,31 @@ output:
     number_sections: true
 ---
 
-
 ```{r echo=FALSE}
-knitr::opts_chunk$set(fig.width=6, fig.height=6) 
+knitr::opts_chunk$set(fig.width=6, fig.height=6)
 ```
 
+# Pre-requisite {-}
 
-# Pre-requisite
 ## Load packages
+
 ```{r message = FALSE,warning = FALSE}
 # Clear variables
 rm(list=ls())
 library(markovchain)
 library(diagram)
+library(castor)
+
 ```
 
+\newpage
 
-# Q1  
+# Q1
 
 ## Generate the transition probabilities
+
 the Markov chain state space $S ={H,D,Y}$ where H represents Harvard, D for Dartmouth and y for Yale
+
 ```{r}
 states = c("H", "D", "Y")
 trans_mat1 <- matrix(c(.6, 0, .4,
@@ -38,6 +43,7 @@ rownames(trans_mat1) = states
 colnames(trans_mat1) = states
 print(trans_mat1)
 ```
+
 ## Draw the transition states with their respective probabilities
 
 ```{r}
@@ -50,19 +56,166 @@ mk_chain1 = new("markovchain",
 plotmat(trans_mat1,relsize = 0.75)
 ```
 
-# Q4  
-## Stock market price data  
-Yes, Stock Market price is highly volatile 
+## Find the probability that the grandson of a man from Harvard went to Harvard
 
-## Appraisal of a Secondary school mathematics teacher      
-No, 
+```{r}
+trans_mat2 = trans_mat1 %*% trans_mat1
+trans_mat2
 
-## Collaborative filtering on a database of movie reviews: for example, Netflix challenge: predict about how much someone is going to enjoy a movie based on their and other users’ movie preferences  
-No, User rarely change their movie preferences  
+```
 
-## Daily weather forecast in Nairobi  
+The probability that the grandson of a man from havard went to have is `0.5`
+
+## Modify the above by assuming that the son of a Harvard man always went to Harvard.
+
+```{r}
+states = c("H", "D", "Y")
+trans_mat3 <- matrix(c(1, 0, 0,
+              .3, .5, .2,
+              .35, .35, .3), nrow = 3, byrow = TRUE)
+
+rownames(trans_mat3) = states
+colnames(trans_mat3) = states
+print(trans_mat3)
+```
+
+## Determine the steady-state probabilities
+
+```{r}
+steadyStates(mk_chain1)
+```
+
+# Q2
+
+## Set up the matrix of the transistion probabilities
+
+```{r}
+states1 = c("professional", "skilled labourer", "unskilled labourer")
+trans_mat3 <- matrix(c(.7, .25, .05,
+                      .22, .58, .2,
+                      .15, .15, .7), nrow = 3, byrow = TRUE)
+
+rownames(trans_mat3) = states1
+colnames(trans_mat3) = states1
+print(trans_mat3)
+```
+
+## Draw the transition states with their respective probabilities
+
+```{r}
+plotmat(trans_mat3,relsize = .75,box.cex = 0.54,cex = 0.7)
+```
+
+## Find the probability that a randomly chosen grandson of an unskilled labourer is a professional man.
+
+```{r}
+trans_mat4 = trans_mat3 %*% trans_mat3
+print(trans_mat4)
+```
+
+The probability is `0.243`
+
+## Determine the steady-state probabilities
+
+```{r}
+
+mk_chain2 = new("markovchain",
+                 states=states1,
+                 transitionMatrix=trans_mat4,
+                 name="Labourer",
+                )
+steadyStates(mk_chain2)
+```
+
+# Q3
+
+## Is this chain irreducible?
+
+Yes, since one chain can get from one state to any other state in the chain
+
+## Is this chain aperiodic?
+
+Yes, the greatest common divisor when moving from state 1 and back is one
+
+## Find the stationary distribution for this chain.
+
+```{r}
+
+states3 = c("1", "2", "3")
+trans_mat5 <- matrix(c(0.5, 0.25, .25,
+                      1/3, 0, 2/3,
+                      0.5, 0.5, 0), nrow = 3, byrow = TRUE)
+
+rownames(trans_mat5) = states3
+colnames(trans_mat5) = states3
+
+
+stationary_states = get_stationary_distribution(trans_mat5)
+print(stationary_states)
+
+
+mk_chain3 = new("markovchain",
+                 states=states3,
+               transitionMatrix=trans_mat5,
+                 name="",
+              )
+
+# test correctness (steady states* trasnsition matrix should be 0, apart from rounding errors)
+cat(sprintf("max(abs(steady states* trasnsition matrix)) = %g\n",max(abs(steadyStates(mk_chain3) %*% trans_mat5))))
+
+#Check if it is a limiting distribution
+apply(steadyStates(mk_chain3),1,sum)
+
+steadyStates(mk_chain3)
+
+```
+
+## Is the stationary distribution a limiting distribution for the chain?
+
+Yes, since the chain is irreducible and aperiodic
+
+# Q4
+
+## Stock market price data
+
+Yes, Stock Market price is highly volatile
+
+## Appraisal of a Secondary school mathematics teacher
+
+Yes, The outcome of the appraisal is dependent on past performances
+
+## Collaborative filtering on a database of movie reviews: for example, Netflix challenge: predict about how much someone is going to enjoy a movie based on their and other users’ movie preferences
+
+No, User rarely change their movie preferences
+
+## Daily weather forecast in Nairobi
+
 Yes, the weather forecast of the a given day is related to the previous day
-## Optical character recognition 
+
+## Optical character recognition
+
 Yes, when characters are observed in sequence they form words which have different meaning depending on the order.
-## Cost of gemstones in Bangladesh  
-No, 
+
+## Cost of gemstones in Bangladesh
+
+# No,
+
+## Daily weather forecast in Nairobi
+
+Yes, the daily weather
+
+## Optical character recognition
+
+Yes, combination of characters have different generate different meanings.
+
+## Cost of gemstones in Bangladesh
+
+Yes, cost of gemstone change over time due to demand on the local market and international market.
+
+# Q5
+
+$\pi$ and $A$ updated based on the following update rules
+$$\pi_k = \frac{\gamma(z_{1k})}{\sum^K_{j=1}\gamma(Z_{1j})}$$
+$$A_{jk} = \frac{\sum^K_{j=1}\xi(z_{t-1},_jz_{tk})}{\sum^K_{m=1}\sum^K_{t=2}\xi(z_{t-1},_jz_{tm})}$$
+given $$\xi(z_{t-1},_jz_{t}) == \frac{\alpha(z_{t-1})P(x_t|z_t)P(z_t|z_{t-1}\beta(z_t))}{P(X)}$$
+if $A_{jk}$ is 0, then $\xi(z_{t-1},_jz_{t})$ is also 0, which makes the subsequent updates in the EM algorithm 0
