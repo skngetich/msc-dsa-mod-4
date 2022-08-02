@@ -11,7 +11,6 @@ output:
 
 ```{r echo=FALSE}
 knitr::opts_chunk$set(fig.width=6, fig.height=6) 
-
 ```
 
 
@@ -38,7 +37,6 @@ trans_mat1 <- matrix(c(.6, 0, .4,
 rownames(trans_mat1) = states
 colnames(trans_mat1) = states
 print(trans_mat1)
-
 ```
 ## Draw the transition states with their respective probabilities
 
@@ -57,13 +55,14 @@ plotmat(trans_mat1,relsize = 0.75)
 Yes, Stock Market price is highly volatile 
 
 ## Appraisal of a Secondary school mathematics teacher      
-No  
+No, 
 
 ## Collaborative filtering on a database of movie reviews: for example, Netflix challenge: predict about how much someone is going to enjoy a movie based on their and other users’ movie preferences  
 No, User rarely change their movie preferences  
 
 ## Daily weather forecast in Nairobi  
-Yes, the daily weather
+Yes, the weather forecast of the a given day is related to the previous day
 ## Optical character recognition 
-Yes, combination of characters have different generate different meanings.
+Yes, when characters are observed in sequence they form words which have different meaning depending on the order.
 ## Cost of gemstones in Bangladesh  
+No, 
