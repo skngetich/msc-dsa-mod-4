@@ -1,0 +1,14 @@
+name: SKN-ER-Injuries
+title: SKN-ER-Injuries
+username:
+account: 8ujj9j-stephen-kipchirchir0ng0etich
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6753538
+bundleId: 6179305
+url: https://8ujj9j-stephen-kipchirchir0ng0etich.shinyapps.io/SKN-ER-Injuries/
+when: 1659960279.48981
+lastSyncTime: 1659960279.48981
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: shinyapp.nb.html|shinyapp.Rmd|shinystater.R|survey.csv
