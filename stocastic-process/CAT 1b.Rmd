@@ -1,0 +1,322 @@
+---
+title: "CAT 1"
+author: "79546 - Ng'etich K. Stephen"
+output: 
+  pdf_document:
+    number_sections: true
+header-includes:
+  - \usepackage{amsmath}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Pre-requisite {-}
+
+## Load packages
+
+```{r message = FALSE,warning = FALSE}
+# Clear variables
+rm(list=ls())
+library(markovchain)
+library(diagram)
+library(castor)
+
+```
+
+\newpage
+
+
+# Clearly distinguish the following terms(13 marks)    
+## Stochastic Process and Deterministic Data  
+Deterministic is on in which state variable are uniquely determined by parameters in the model and by sets of the previous while a stochastic process are described by random variables or distributions.
+
+Deterministic data do not contain random components, so the output is completely determined by inputs and any parameters.
+
+
+## Discrete and Continuous stochastic process.
+
+A discrete stochastic process  has distinct possible outcomes e.g. flipping a coin has 2 outcomes head/tail while a continuous stochastic process has a uncountable possible outcomes e.g safaricom shares in the NSE market.  
+
+## sigma-algebra and Filtration
+Filtration is a flow of information upto some time while $\sigma$-algebra is represents a set of all possible outcomes.Filtration is contains some infomation about the all the event in a sigma-algebra.
+
+## Random Walk and Gambler’s Ruin Problem
+
+A random walk is a process by which randomly-moving objects wander away from where they started.Gambler's ruin problem is a one-dimension random walk process that describes a person wealth when he/she is fully invested in risky bet whose value increase/decreases by 1 with each round.  
+
+## Counting Process and Branching Process   
+A counting process is a stochastic process that represents the total number of events occurring in a given time interval.Branching process is a type of counting process that models the growth of populations.  
+
+## Birth and Death Process  
+A birth process is when the number of events increase while the death process is when the number of the events decrease.
+
+## Static Simulation Model and Dynamic Simulation Model  
+Static simulation models represent a system at a particular point in time while dynamic simulation models represent systems as they evolve over time.  
+
+## Mathematical Model and Simulation Model  
+Mathematical model use explicit mathematical expression for a modelling a particular pattern i.e poisson distribution for a counting process while simulation model is a mathematical model that calculates the impact of uncertain inputs and real world decisions.Simulation models are more flexible compared to mathematical model.   
+
+## Monte Carlo Simulation and Queuing System 
+Monte-carlo simulation is a statistical simulation technique that provides approximate solution to problems expressed mathematically. Queuing system are simplified mathematical model used to explain congestion. 
+
+## Markov and Poisson processes  
+Markov process is where in which the future states depends on the current state but not all previous state.A poisson process is a continuous time Markov process on the non-negative integers where all transitions are a jump of +1 and the times between jumps are independent exponential random variables with the same rate parameter $\lambda$.  
+
+## Queuing and Renewal processes  
+A renewal process is recurrent-event process with independent identically distributed interevent times.Queuing process is a class of random processes describing phenomena of queue formation.Queue process can be use to test the iid property of a renewal process.  
+
+## Martingale and Brownian motion 
+Martingale is a sequence of random variables (i.e., a stochastic process) for which, at a particular time in the realized sequence, the expectation of the next value in the sequence is equal to the present observed value even given knowledge of all prior observed values at a current time while The continuous-time stochastic process is a standard Brownian motion if it has almost surely continuous paths and stationary independent increments such that $X(s + t) - X(s)$ is Gaussian with mean 0
+and variance t.A standard Brownian motion has continuous martingale property.
+
+## Hidden Markov model and semi-Markov process 
+Hidden markov model(HMM) is an embedded stochastic process with an underlying stochastic process that is not observable.but can only be observed through another set of stochastic processes that produces observation. Semi-markov model is an extension of the HMM which has a variable duration and sojourn time (mean waiting time). HMM assumes one observation per state while the semi-markov process assumes that each state can emit a sequence of observation.  
+
+
+# Collins bought a share of stock for \$12, and it is believed that the stock price moves (day by day) as a simple random walk with p = 0.58. What is the probability that Collins’ stock reaches the high value of \$35 before the low value of $8? (3 marks)  
+
+The probability that the stock goes up by 35 before going down by 8.computing $p(a)$
+$$p=0.58,q=1-p=0.42,a=35,b=8$$
+$$p(a)=\frac{1-(\frac{q}{p})^b}{1-(\frac{q}{p})^{a+b}} = \frac{1-(\frac{0.42}{0.58})^8}{1-(\frac{0.42}{0.58})^{35+8}} = \frac{0.9243915431}{0.9999990618} =0.924392 $$
+
+
+# Explain clearly the difference between the following terms as used in Markov Chains (10 marks)  
+## Communicating class and absorption state
+A communication class is a set of states whose members communicate while an absobsion state is state that has a route to itself with a probability of 1 meaning that is cannot leave that state.
+
+## Recurrence and non recurrence state
+
+A recurrent state has the property that a Markov chain starting at this state returns to this state infinitely often, with probability 1.A non-recurrent state is also known as transient state.
+
+
+## Periodicity and aperiodic  
+Periodic is when you visit each state at uniform rate, aperiodic is when you visit each state at random rate.  
+
+## Ergodic chain and transient state  
+A ergodic markov chain is aperiodic, recurrent and can communicate with each other while a transient state while A transient state has the property that a Markov chain starting at this state returns to this state only finitely often, with probability 
+
+
+## Reducible and irreducible
+A Markov irreducible markov chain if and only if all states belong to one communication class. A Markov chain is called reducible if and only if there are two or more communication classes.  
+
+
+
+# Consider an M/M/1 model at steady state, with $\mu$ as the service mechanism rate and $\lambda$ as the arrival rate. Let $Pn(t) = P$ [n customers in the system at time t] (Probability that there are n customers at time t). Derive $Lq$, $Ls$, $Wq$ and $Ws$.(20 marks)
+
+THe avarage number  of customers in the system $L$ is cumputed as $$L=\sum_{n=0}^{\infty}nP_n$$
+where ${P_0,P_1,...}$ are steady state probabilities of finding $n$ customers in the system.
+Using Little law: 
+$$w=\frac{L}{\lambda}$$
+$$w_Q = w - \frac{1}{\mu}$$
+
+$$L_Q=\lambda w_q$$
+$$\begin{aligned}
+\rho &= \frac{\lambda}{\mu} \\
+P_n &= \left(1-\frac{\lambda}{\mu}\right)\left(\frac{\lambda}{\mu}\right)^n  = \bigg(\frac{1-\rho}{\rho^n} \bigg)\\
+L &= \frac{\lambda}{\mu-\lambda} = \frac{\rho}{1- \rho}\\
+w &= \frac{1}{\mu-\lambda} = \frac{1}{\mu(1-\rho)}\\
+w_Q &= \frac{\lambda}{\mu(\mu-\lambda)} = \frac{\rho}{\mu(1-\rho)}\\
+L_Q &= \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{\rho^2}{1-\rho}\\
+\end{aligned}$$
+where:   
+$\rho$ is the server utilisation  
+$P_0$ is the probability of empty system  
+$L$ Long run time-avarage number of customers in system  
+$w$ long-run average time spent in system per customer  
+$LQ$ long-run time-average number of customers in queue  
+$wQ$ long-run average time spent in queue per customer  
+
+# Clearly specify five components of a Hidden Markov Model(5 marks).   
+- Number of hidden states in the model.  
+- Number of distinct observation symbols per state.  
+- The initial state distribution.  
+- The state transition probability distribution.  
+- The observation symbol probability distribution.   
+
+# Use Chapman Kolmogorov postulates to derive the Poisson Process. Also derive the mean and variance of the Poisson process.(20 marks)  
+
+Poisson process transition matrix is given by
+$$\begin{pmatrix}
+p_{00}'(t) & p_{01}'(t) & p_{02}'(t) & \cdots \\
+p_{10}'(t) & p_{11}'(t) & p_{12}'(t) & \cdots \\
+p_{20}'(t) & p_{21}'(t) & p_{22}'(t) & \cdots \\
+\vdots & \vdots &\vdots & \ddots \\
+\end{pmatrix} = \begin{pmatrix}
+p_{00}(t) & p_{01}(t) & p_{02}(t) & \cdots \\
+p_{10}(t) & p_{11}(t) & p_{12}(t) & \cdots \\
+p_{20}(t) & p_{21}(t) & p_{22}(t) & \cdots \\
+\vdots & \vdots &\vdots & \ddots \\
+\end{pmatrix} = \begin{pmatrix}
+- \lambda & \lambda & 0 & 0&0 &\cdots \\
+0 & - \lambda &  \lambda &0 & 0& \cdots \\
+0 & 0 & - \lambda &  \lambda & 0 & \cdots \\
+\vdots & \vdots &\vdots & \vdots & \vdots & \ddots \\
+\end{pmatrix}$$
+
+the first different equations: $$\frac{\partial P_{0k}(t)}{\partial t} = \lambda P_{0 k-1}(t) - \lambda P_{0k}(t)$$
+solve where k = 0:
+
+$$\int_0^{P_{00}(t)} \frac{\partial P_{00}(t)}{P_{00}(t)} =\int_0^{t}  \lambda \partial t$$
+Rearrange like terms and integrate.
+
+$$\frac{\partial P_{0k}(t)}{\partial t} = \lambda P_{0 k-1}(t) - \lambda P_{0k}(t) \rightarrow \ln P_{00}(t) = -\lambda t \rightarrow P_{00}(t) = e^{-\lambda t}$$
+when  k=1
+
+$$\frac{\partial P_{01}(t)}{\partial t} = \lambda P_{00}(t) - \lambda P_{01}(t)$$
+$$\frac{\partial P_{01}(t)}{\partial t} + \lambda P_{01}(t) = \lambda P_{00}(t)$$
+introduce the integrating factor in both sides.
+
+$$e^{\lambda t}\frac{\partial P_{01}(t)}{\partial t} + \lambda P_{01}(t)e^{\lambda t} = \lambda P_{00}(t)e^{\lambda t}$$
+
+since $P_{00}(t) = e^{-\lambda t}$ we can replace it in the equation.
+
+$$e^{\lambda t}\frac{\partial P_{01}(t)}{\partial t} + \lambda P_{01}(t)e^{\lambda t} =\lambda e^{\lambda t}e^{-\lambda t}$$
+$$\int_0^{e^{\lambda t}P_{01}(t)} \partial[ e^{\lambda t}P_{01}(t)] = \int_0^t \lambda \partial t$$
+$$e^{\lambda t} P_{01}(t) = \lambda t \rightarrow  P_{01}(t) = \lambda t e^{-\lambda t} $$
+when k = 2
+
+$$\frac{\partial P_{02}(t)}{\partial t} = \lambda P_{01}(t) - \lambda P_{02}(t)$$
+$$\frac{\partial P_{02}(t)}{\partial t} + \lambda P_{02}(t) = \lambda P_{01}(t)$$
+introduce the integrating factor in both sides.
+
+$$e^{\lambda t}\frac{\partial P_{02}(t)}{\partial t} + \lambda P_{02}(t)e^{\lambda t} = \lambda P_{01}(t)e^{\lambda t}$$
+
+since $P_{01}(t) = \lambda t e^{-\lambda t}$ we can replace it in the equation.
+
+$$e^{\lambda t}\frac{\partial P_{02}(t)}{\partial t} + \lambda P_{02}(t)e^{\lambda t} =\lambda^2 t$$
+$$\int_0^{e^{\lambda t}P_{02}(t)} \partial[ e^{\lambda t}P_{02}(t)] = \int_0^t \lambda^2 t \partial t$$
+$$e^{\lambda t} P_{02}(t) = \lambda t \rightarrow  P_{02}(t) = \frac{\lambda^2 t^2}{2} e^{-\lambda t} $$
+Looking at when k=0,1,2 
+$$P_{00}(t) = e^{-\lambda t}\\ P_{01}(t) = \lambda t e^{-\lambda t} \\ P_{02}(t) = \frac{\lambda^2 t^2}{2} e^{-\lambda t}$$
+there exist to be pattern which represent a poisson:
+
+$$P_{0k}(t) = \frac{(\lambda t)^k}{k!}e^{- \lambda t}$$
+
+Deriving the mean of poisson distribution
+
+$$E(X)=\sum xp(x)$$
+$$ = \sum^{\infty}_{x=0} x \frac{\lambda^xe^{-\lambda}}{x!}$$
+$$ = e^{-\lambda}\sum^{\infty}_{x=0} x \frac{\lambda^x}{x!}$$
+$$=\lambda e^{-\lambda} \sum^{\infty}_{x=1}  \frac{\lambda^{x-1}}{(x-1)!}$$
+let $(x-1)$ be y:
+$$E(x) = \lambda e^{-\lambda} \sum^{\infty}_{y=0}  \frac{\lambda^{y}}{y!}$$
+recall $e^a = \sum^{\infty}_{y=0} \frac{a^y}{y!}$
+hence $$E(x) = \lambda e^{-\lambda} e^{-\lambda} \rightarrow = \lambda $$
+Therefore  mean of poisson is $\lambda$
+
+Variance is given by:
+$$Var(X) = E(X^2) - E(X)^2$$
+Since E(X) is give by $\lambda$
+
+Let us consider the expectation of X(X-1) which is defined as $$E[X(X-1)] = \sum x(x-1).p(x)$$
+hence
+$$E[X(X-1)] = \sum x(x-1).\frac{\lambda^xe^{-\lambda}}{x!}$$
+$$\begin{split}
+\mathrm{E}[X \, (X-1)] &= \sum_{x=0}^\infty x \, (x-1) \cdot \frac{\lambda^x \, e^{-\lambda}}{x!} \\
+&= \sum_{x=2}^\infty x \, (x-1) \cdot \frac{\lambda^x \, e^{-\lambda}}{x!} \\
+&= e^{-\lambda} \cdot \sum_{x=2}^\infty x \, (x-1) \cdot \frac{\lambda^x}{x \cdot (x-1) \cdot (x-2)!} \\
+&= \lambda^2 \cdot e^{-\lambda} \cdot \sum_{x=2}^\infty \frac{\lambda^{x-2}}{(x-2)!} \; .
+\end{split}$$
+
+substituting y = x-2 we get:
+$$\mathrm{E}[X \, (X-1)] = \lambda^2 \cdot e^{-\lambda} \cdot \sum_{z=0}^\infty \frac{\lambda^z}{z!} \; .$$
+Using the power series expansion of the exponential function
+$$e^x = \sum_{n=0}^\infty \frac{x^n}{n!} \; $$
+the expected value becomes: $$\mathrm{E}[X \, (X-1)] = \lambda^2 \cdot e^{-\lambda} \cdot e^{\lambda} = \lambda^2 \; .$$
+the expectation can be written as:
+$$\mathrm{E}[X \, (X-1)] = \mathrm{E}(X^2 - X) = \mathrm{E}(X^2) - \mathrm{E}(X) \; $$
+such that
+
+$$\mathrm{E}(X^2) - \mathrm{E}(X) = \lambda^2 \quad \Rightarrow \quad \mathrm{E}(X^2) = \lambda^2 + \lambda \; $$
+
+hence the variance of a poisson process is 
+$$\mathrm{Var}(X) = \lambda^2 + \lambda - \lambda^2 = \lambda \;$$  
+
+# A certain stock price has been observed to follow a pattern. If the stock price goes up one day, there's a 25% chance of it rising tomorrow, a 35% chance of it falling, and a40% chance of it remaining the same. If the stock price falls one day, there's a 25% chance of it rising tomorrow, a 50% chance of it falling, and a 25% chance of it remaining the same. Finally, if the price is stable on one day, then it has a 50-50 change of rising or falling the next day.  
+## Generate the transition matrix  
+
+the Markov chain state space $S ={U,R,F}$ where U represents Rising stock price, R for stock remaining same and F for failing stock price
+
+```{r}
+states = c("U", "D", "Y")
+trans_mat1 <- matrix(c(.25, .40, .35,
+                        .25, .25, .50,
+                        .5, 0, .5), nrow = 3, byrow = TRUE)
+
+rownames(trans_mat1) = states
+colnames(trans_mat1) = states
+print(trans_mat1)
+```
+## Draw the Markov chain using R    
+
+```{r}
+mk_chain1 = new("markovchain",
+                 states=states,
+                 transitionMatrix=trans_mat1,
+                 name="HDY",
+                )
+
+plotmat(trans_mat1,relsize = 0.65)
+```
+
+## Determine if the chain is Ergodic    
+A ergodic markov chain is aperiodic, recurrent and can communicate with each other.
+
+- The chain is `irreducible` since is possible to get to any state from one state.  
+- The chain does not have recurrent states.  
+- The chain is aperiodic
+
+Hence the markov chain is not ergodic  
+
+## Find the limiting distribution of the transition matrix
+
+```{r}
+
+#Check if it is a limiting distribution
+apply(steadyStates(mk_chain1),1,sum)
+
+steadyStates(mk_chain1)
+```
+  
+  
+# A telephone attendant receives 110 calls during the busy hour. Each call takes, on average, 2.1 minutes to process.(7 marks)  
+
+## What percentage of the attendant's time is devoted to answering calls?  
+
+mean arrival rate  = $\lambda$ = 110 call per hour
+mean service rate  = $\frac{1}{\mu}$ =  $\frac{1}{2.1} \times 60$ = 28.5714 = 29 calls per hour
+
+$\mu < \lambda$ hence the waiting line would eventually grow infinity large 
+
+## How long must people wait, on average, before their call is processed?  
+
+# Jobs arrive to a computer system (consisting of a CPU and an I/O device) according to a Poisson process with rate 8 jobs per minute. Once in the system, a job requires on average 30 seconds of CPU time and 9 minutes of I/O time, in which the CPU and I/O time required by the jobs are exponentially distributed. (10 marks) 
+
+## What is the probability that a job will have to wait before being processed bythe devices? (Hint: replace the CPU and I/O subsystem as equivalent to single server)
+$\lambda = 8$ and $\mu = 9.5$  
+
+$$\rho = \frac{\lambda}{\mu} = \frac{8}{9.5} = 0.8421$$
+$$W = \frac{1}{\mu - \lambda} = \frac{1}{9.5 - 8} = 0.6667 \text{ minutes}$$
+
+ 
+$Wq = pW = 0.8421 \times 0.6667 = 0.56143$
+
+## What proportion of time is the system busy?  
+
+$$\rho = \frac{\lambda}{\mu} = \frac{8}{9.5} = 0.8421 minutes$$  
+
+## On average, how many jobs are waiting in line to be processed?  
+$$L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{8^2}{9.5(9.5-8)} = \frac{64}{14.25} = 4.491 jobs  \approx 5 \,jobs $$  
+
+## On average, how long will a job spend in the system?    
+$$W_q = \frac{L_q}{\lambda} = 5/8 = 0.625 minutes$$   
+
+## What is the probability that exactly 10 jobs arrive to the system in one minute?  
+
+$$P_0 = 1 - \bigg(\frac{\lambda}{\mu} \bigg)^n = 1-0.8421 = 0.1579$$
+$$P_n = P_0 - \bigg(\frac{\lambda}{\mu} \bigg)^n$$
+$$P_10 = P_0  \bigg(\frac{\lambda}{\mu} \bigg)^{10} = 0.1579 \times 0.8421^{10} = 0.02831$$  
+
+# Consider a Markov chain with two possible states, S = {0, 1}. In particular, suppose that the transition matrix is given by(4 marks)
